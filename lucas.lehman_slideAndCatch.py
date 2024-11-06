@@ -8,6 +8,15 @@ class Basket(simpleGE.Sprite):
         self.setImage("basket.png")
         self.setSize(120,100)
         self.position = (140, 430)
+        self.moveSpeed = 5 
+        
+        
+    def process(self):
+        if self.isKeyPressed(pygame.K_LEFT):
+            self.x -=self.moveSpeed
+            
+        if self.isKeyPressed(pygame.K_RIGHT):
+            self.x +=self.moveSpeed
 
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -17,8 +26,6 @@ class Game(simpleGE.Scene):
         
         self.sprites = [self.basket]
         
-
-
         
         
 def main():
