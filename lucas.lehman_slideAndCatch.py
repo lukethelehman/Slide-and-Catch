@@ -44,11 +44,18 @@ class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.setImage("tree.png")
+        self.sndMeow = simpleGE.Sound("meow.wav")
         self.basket = Basket(self)
         self.cat = Cat(self)
         
         self.sprites = [self.basket,
                         self.cat]
+        
+    def process(self):
+        if self.cat.collidesWith(self.basket):
+            self.cat.reset()
+            self.sndMeow.play()
+            
         
         
         
