@@ -39,6 +39,18 @@ class Basket(simpleGE.Sprite):
             
         if self.isKeyPressed(pygame.K_RIGHT):
             self.x +=self.moveSpeed
+            
+class LblScore(simpleGE.Label):
+    def __init__(self):
+        super().__init__()
+        self.text = "Score: 0"
+        self.center = (100, 30)
+
+class LblTime(simpleGE.Label):
+    def __init__(self):
+        super().__init__()
+        self.text = "Time left: 10"
+        self.center = (500, 30)
 
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -46,13 +58,20 @@ class Game(simpleGE.Scene):
         self.setImage("tree.png")
         self.sndMeow = simpleGE.Sound("meow.wav")
         self.numCats = 3
+        self.score = 0
+        self.timer = simpleGE.Timer()
+        self.timer.totalTime = 10
+        self.lblTime = LblTime()
+        self.lblScore = LblScore()
         self.basket = Basket(self)
         self.cats = []
         for i in range(self.numCats):
             self.cats.append(Cat(self))
         
         self.sprites = [self.basket,
-                        self.cats]
+                        self.cats,
+                        self.lblScore,
+                        self.lblTime]
         
     def process(self):
         for cat in self.cats:
@@ -60,6 +79,14 @@ class Game(simpleGE.Scene):
             if cat.collidesWith(self.basket):
                 cat.reset()
                 self.sndMeow.play()
+                self.score += 1
+                self.lblScore.text = f"Score: {self.score}"
+            
+        self.lblTime.text = f"Time Left: {self.timer.getTimeLeft():.2f}"
+        if self.timer.getTimeLeft() < 0:
+            print(f"Score: {self.score}")
+            self.stop()
+                
             
         
         
