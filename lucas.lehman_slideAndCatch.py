@@ -7,7 +7,7 @@ class Cat(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("cat.png")
-        self.setSize(150, 150)
+        self.setSize(125, 125)
         self.minSpeed = 3
         self.maxSpeed = 8
         self.reset()
@@ -30,7 +30,7 @@ class Basket(simpleGE.Sprite):
         self.setImage("basket.png")
         self.setSize(120,100)
         self.position = (140, 430)
-        self.moveSpeed = 5 
+        self.moveSpeed = 10 
         
         
     def process(self):
@@ -45,16 +45,21 @@ class Game(simpleGE.Scene):
         super().__init__()
         self.setImage("tree.png")
         self.sndMeow = simpleGE.Sound("meow.wav")
+        self.numCats = 3
         self.basket = Basket(self)
-        self.cat = Cat(self)
+        self.cats = []
+        for i in range(self.numCats):
+            self.cats.append(Cat(self))
         
         self.sprites = [self.basket,
-                        self.cat]
+                        self.cats]
         
     def process(self):
-        if self.cat.collidesWith(self.basket):
-            self.cat.reset()
-            self.sndMeow.play()
+        for cat in self.cats:
+            
+            if cat.collidesWith(self.basket):
+                cat.reset()
+                self.sndMeow.play()
             
         
         
