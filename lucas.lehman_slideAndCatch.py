@@ -7,6 +7,7 @@ class Cat(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("cat.png")
+        self.sndHiss = simpleGE.Sound("hiss.mp3")
         self.setSize(125, 125)
         self.minSpeed = 3
         self.maxSpeed = 8
@@ -21,6 +22,7 @@ class Cat(simpleGE.Sprite):
     def checkBounds(self):
         if self.bottom > self.screenHeight:
             self.reset()
+            self.sndHiss.play()
         
         
 
@@ -30,7 +32,7 @@ class Basket(simpleGE.Sprite):
         self.setImage("basket.png")
         self.setSize(120,100)
         self.position = (140, 430)
-        self.moveSpeed = 75
+        self.moveSpeed = 10
         
         
     def process(self):
